@@ -1,7 +1,15 @@
 package com.example.chatapps.Models;
 
 public class Users {
-    String username,email,image,uid;
+    String username,email,image,uid,token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getUid() {
         return uid;

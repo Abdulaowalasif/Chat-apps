@@ -1,122 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@color/white"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/chatbg"
+    android:orientation="vertical"
     tools:context=".Activities.ChatActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="391dp"
         android:layout_height="wrap_content"
-        android:background="#dedede"
+        android:background="@color/grey"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageButton
-            android:backgroundTint="#dedede"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
             android:id="@+id/go_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/back"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="64dp"
-            android:layout_height="57dp"
-            android:padding="2dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_launcher_background"
-            android:scaleType="centerCrop"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/grey"
+            android:src="@drawable/back"
+            app:tint="@color/white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/toolbar_userImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginEnd="10dp"
-            android:id="@+id/toolbar_userImage"/>
-        <TextView
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="name"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:id="@+id/toolbar_username"/>
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/toolbar_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Abdul Aowal"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/online_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="Offline"
+                android:textSize="12sp" />
+        </LinearLayout>
+
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/chats_rc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <LinearLayout
-        android:background="#dedede"
-        android:weightSum="2"
-        android:layout_gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="2"
-            android:layout_height="60dp"
-            app:cardCornerRadius="40dp"
-          >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="70dp"
+        android:background="@color/grey"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
-                android:weightSum="2"
-                android:background="@color/white"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/msg_box"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:layout_weight="3"
+                android:backgroundTint="@color/grey"
+                android:hint="Enter a message"
+                android:textColor="@color/white"
+                android:textColorHint="#dedede" />
 
-                <EditText
-                    android:layout_weight="3"
-                    android:id="@+id/msg_box"
-                    android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@color/white"
-                    android:textColorHint="#dedede"
-                    android:hint="Enter a message"
-                    />
-                <ImageButton
-                    android:id="@+id/attachment"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:backgroundTint="@color/white"
-                    android:src="@drawable/attachment"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <ImageButton
+                android:id="@+id/attachment"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:backgroundTint="@color/grey"
+                android:src="@drawable/attachment"
+                app:tint="@color/white" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
         <ImageButton
-            android:foregroundGravity="center"
-            android:background="@drawable/send_btn_bg"
-            android:layout_gravity="center_vertical"
-            android:layout_weight=".5"
             android:id="@+id/send"
-            android:layout_marginEnd="5dp"
             android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight=".5"
+            android:background="@drawable/send_btn_bg"
+            android:foregroundGravity="center"
             android:src="@drawable/send"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="@+id/cardView" />
-    </LinearLayout>
-
-</LinearLayout>
+            app:layout_constraintTop_toTopOf="@+id/cardView"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

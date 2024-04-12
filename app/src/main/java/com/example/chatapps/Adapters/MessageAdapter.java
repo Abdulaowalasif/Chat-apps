@@ -1,6 +1,9 @@
 package com.example.chatapps.Adapters;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.chatapps.Auth.Utils;
+import com.example.chatapps.Auth.FirebaseInstance;
 import com.example.chatapps.Models.Message;
 import com.example.chatapps.R;
 import com.example.chatapps.databinding.MsgReceiveLayoutBinding;
 import com.example.chatapps.databinding.MsgSentLayoutBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter {
@@ -48,9 +52,29 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if (holder instanceof SenderViewHolder) {
             SenderViewHolder viewHolder = (SenderViewHolder) holder;
             bindMessageData(viewHolder, msg);
+
+
         } else if (holder instanceof ReceiverViewHolder) {
             ReceiverViewHolder viewHolder = (ReceiverViewHolder) holder;
             bindMessageData(viewHolder, msg);
+            viewHolder.binding.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri imageUri = Uri.parse(msg.getImageUri());
+
+                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    DownloadManager.Request request = new DownloadManager.Request(imageUri);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setTitle("Downloading image");
+
+                    // Choose a destination folder for the downloaded file
+                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Downloaded_images");
+                    request.setDestinationUri(Uri.fromFile(file));
+
+                    // Enqueue the download
+                    downloadManager.enqueue(request);
+                }
+            });
         }
     }
 
@@ -98,7 +122,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-        if (Utils.auth.getUid().equals(message.getSenderId())) {
+        if (FirebaseInstance.auth.getUid().equals(message.getSenderId())) {
             return SENDER_VIEW;
         } else {
             return RECEIVER_VIEW;
