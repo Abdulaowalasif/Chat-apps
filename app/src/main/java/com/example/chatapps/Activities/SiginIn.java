@@ -1,7 +1,5 @@
 package com.example.chatapps.Activities;
 
-import static com.example.chatapps.Auth.Utils.*;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.chatapps.Auth.Utils;
+import com.example.chatapps.Auth.FirebaseInstance;
 import com.example.chatapps.R;
 import com.example.chatapps.databinding.ActivitySiginInBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +38,7 @@ public class SiginIn extends AppCompatActivity {
         dialog.setMessage("Logging in..");
         dialog.setCancelable(false);
 
-        if (auth.getCurrentUser()!=null){
+        if (FirebaseInstance.auth.getCurrentUser()!=null){
             startActivity(new Intent(SiginIn.this, MainActivity.class));
             finish();
         }
@@ -59,7 +57,7 @@ public class SiginIn extends AppCompatActivity {
                 } else if (pass.isEmpty()) {
                     binding.userPassword.setError("enter your password");
                 }else {
-                    auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    FirebaseInstance.auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
